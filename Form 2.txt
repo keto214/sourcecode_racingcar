@@ -1,0 +1,176 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WindowsFormsApp6
+{
+    public partial class Form2 : Form
+    {
+        public Form2()
+        {
+            InitializeComponent();
+
+            over.Visible = false;
+        }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            tocdo(5); // max speed
+            lose();
+            diemdatduoc();
+        }
+        Random newcars = new Random();
+        void tocdo(int speed)
+        {
+            if (bien1.Top > 290) bien1.Top = 0; // bien1 di chuyen
+            else
+            bien1.Top += speed;
+
+            if (bien2.Top > 290) bien2.Top = 0;// bien2 di chuyen
+            else
+                bien2.Top += speed;
+
+            if (bien3.Top > 290) bien3.Top = 0;// bien3 di chuyen
+            else
+                bien3.Top += speed;
+
+
+            if (cardie1.Top > 290) {
+                //diemchoi++;
+                cardie1.Left = newcars.Next(0, 250); // xuat hien xe o khoang ( do ramdom) vt trai
+                cardie1.Top = newcars.Next(0, 100);// xuat hien xe o khoang ( do ramdom) vt tren
+                cardie1.Top = 0;
+
+            } 
+            else cardie1.Top += speed;
+
+
+            if (cardie2.Top > 290)
+            {
+                //diemchoi++;
+                cardie2.Left = newcars.Next(0, 230); // xuat hien xe o khoang ( do ramdom) vt trai
+                cardie2.Top = newcars.Next(0, 90);// xuat hien xe o khoang ( do ramdom) vt tren
+                
+                cardie2.Top = 0;
+            }
+            else cardie2.Top += speed;
+
+            if (cardie3.Top > 290)
+            {
+               // diemchoi++;
+                cardie3.Left = newcars.Next(0, 210); // xuat hien xe o khoang ( do ramdom) vt trai
+                cardie3.Top = newcars.Next(0, 80);// xuat hien xe o khoang ( do ramdom) vt tren
+                cardie3.Top = 0;
+            }
+            else cardie3.Top += speed;
+
+            if (cardie4.Top > 290)
+            {
+                //diemchoi++;
+                cardie4.Top = 0;
+                cardie4.Left = newcars.Next(0, 250); // xuat hien xe o khoang ( do ramdom) vt trai
+                cardie4.Top = newcars.Next(0, 90);// xuat hien xe o khoang ( do ramdom) vt tren
+                
+            }
+                
+            else cardie4.Top += speed;
+
+
+        }
+
+        private void bien2_Click(object sender, EventArgs e)
+        {
+
+        }
+        
+
+        int speeds = 4;
+        private void Form2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Left && Mycar.Left >0 ) Mycar.Left -= 4;
+            if (e.KeyCode == Keys.Right && Mycar.Left <240) Mycar.Left += 4;
+            if (e.KeyCode == Keys.Down && speeds >4) speeds--;
+           if (e.KeyCode == Keys.Up && speeds <50) speeds++;
+        }
+        int diemchoi=0;
+        void diemdatduoc()
+        {
+            diemchoi++;
+            label1.Text = "Score:" + diemchoi.ToString()+ " Km";
+           
+            
+        }
+
+        
+        void lose()
+        {
+            if (Mycar.Bounds.IntersectsWith(cardie1.Bounds))
+            {
+                timer1.Enabled = false;
+                over.Visible = true; // dieu kien de khi 2 pic cham nhau Pause- xuat hien Text Box
+
+            }
+
+            if (Mycar.Bounds.IntersectsWith(cardie2.Bounds))
+            {
+                timer1.Enabled = false;
+                over.Visible = true;
+            }
+            if (Mycar.Bounds.IntersectsWith(cardie3.Bounds))
+            {
+                timer1.Enabled = false;
+                over.Visible = true;
+
+            }
+            if (Mycar.Bounds.IntersectsWith(cardie4.Bounds))
+            {
+                timer1.Enabled = false;
+                over.Visible = true;
+
+
+            }
+
+        }
+        void newgame()
+        {
+          
+
+
+        }
+
+        void exitgame()
+        {
+            if (MessageBox.Show("Do you exit?", "Notification", MessageBoxButtons.OKCancel)== System.Windows.Forms.DialogResult.OK)
+            {
+                Application.Exit();
+            }
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            exitgame();
+        }
+
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 NewForm = new Form2();
+            NewForm.Show();
+            this.Dispose(false);
+        }
+
+       
+    }
+}
